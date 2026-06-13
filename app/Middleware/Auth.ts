@@ -4,9 +4,10 @@ export default class AuthMiddleware {
   public async handle({ auth, response }: HttpContextContract, next: () => Promise<void>) {
     try {
       await auth.use('api').authenticate()
-      await next()
     } catch {
       return response.unauthorized({ message: 'Invalid or expired token' })
     }
+    
+    await next()
   }
 }

@@ -3,9 +3,7 @@ import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import User from 'App/Models/User'
 
 export default class AuthController {
-  /**
-   * Conventional Login - Login with email & password
-   */
+
   public async login({ request, auth, response }: HttpContextContract) {
     const loginSchema = schema.create({
       email: schema.string({}, [rules.email()]),
@@ -39,9 +37,21 @@ export default class AuthController {
     }
   }
 
-  /**
-   * Logout - Revoke current token
-   */
+  public async me({ auth, response }: HttpContextContract) {
+    const user = auth.use('api').user!
+
+    return response.ok({
+      message: 'Profile retrieved successfully',
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        leaveLimit: user.leaveLimit,
+      },
+    })
+  }
+
   public async logout({ auth, response }: HttpContextContract) {
     await auth.use('api').revoke()
 
