@@ -8,12 +8,12 @@ export default class Role {
   ) {
     const user = auth.use('api').user
 
-    // Ensure user is authenticated
+
     if (!user) {
       return response.unauthorized({ message: 'Unauthorized access' })
     }
 
-    // Check if user's role is in the allowedRoles array
+
     if (!allowedRoles.includes(user.role)) {
       return response.forbidden({
         message: `Forbidden: Only ${allowedRoles.join(' or ')} can access this resource`,

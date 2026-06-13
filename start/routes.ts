@@ -15,9 +15,16 @@ Route.group(() => {
   }).prefix('/auth').middleware('auth')
 
 
+  // Protected application routes (Leave Requests - Employee Only)
   Route.group(() => {
     Route.get('/leave-requests', 'LeaveRequestsController.index')
     Route.post('/leave-requests', 'LeaveRequestsController.store')
   }).middleware(['auth', 'role:employee'])
+
+  // Protected application routes (Admin Only)
+  Route.group(() => {
+    Route.get('/leave-requests', 'AdminLeaveRequestsController.index')
+    Route.patch('/leave-requests/:id/status', 'AdminLeaveRequestsController.updateStatus')
+  }).prefix('/admin').middleware(['auth', 'role:admin'])
 
 }).prefix('/api')
