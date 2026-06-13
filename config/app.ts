@@ -13,3 +13,18 @@ export const http = {
     sameSite: false,
   },
 }
+
+export const logger = {
+  name: Env.get('APP_NAME', 'sistem_cuti'),
+  enabled: true,
+  level: Env.get('LOG_LEVEL', 'info'),
+  prettyPrint: Env.get('NODE_ENV') === 'development',
+}
+
+export const profiler = {
+  enabled: true,
+  blacklist: [],
+  whitelist: [],
+}
+
+export const validator = {}
